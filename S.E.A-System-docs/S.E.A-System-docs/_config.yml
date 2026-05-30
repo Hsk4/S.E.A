@@ -1,3 +1,14 @@
 
 exclude:
   - "**/*.md"
+  - node_modules/
+  - .git/
+
+include:
+  - Documentation/
+
+plugins:
+  - jekyll-github-metadata
+  - jekyll-seo-tag
+
+theme: jekyll-theme-primer

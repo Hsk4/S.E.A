@@ -1,0 +1,13 @@
+{
+  "name": "mobile",
+  "private": true,
+  "packageManager": "pnpm@10",
+  "scripts": {
+    "run": "flutter run",
+    "test": "flutter test",
+    "analyze": "flutter analyze"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}

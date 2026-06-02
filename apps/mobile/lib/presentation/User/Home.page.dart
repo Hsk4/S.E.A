@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/constants/app_colors.dart';
 import 'package:mobile/core/constants/app_spacing.dart';
+import 'package:mobile/core/constants/routes.dart';
 import 'package:mobile/core/widgets/widgets.dart';
 
 class HomePage extends StatelessWidget {
@@ -16,8 +17,7 @@ class HomePage extends StatelessWidget {
         children: [
           const AppSectionHeader(
             title: 'Reusable widgets',
-            subtitle:
-                'Built from shared tokens to match the dark dashboard style in your design.',
+            subtitle: 'Built from shared tokens to match the dark dashboard style in your design.',
           ),
           const SizedBox(height: AppSpacing.s4),
           AppCard(
@@ -31,10 +31,7 @@ class HomePage extends StatelessWidget {
                   compact: true,
                 ),
                 const SizedBox(height: AppSpacing.s4),
-                Text(
-                  'Emergency dispatch panel',
-                  style: textTheme.headlineMedium,
-                ),
+                Text('Emergency dispatch panel', style: textTheme.headlineMedium),
                 const SizedBox(height: AppSpacing.s1),
                 Text(
                   'This screen demonstrates the shared widgets that can be reused across user, responder, and helper flows.',
@@ -58,12 +55,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: AppSpacing.s3),
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () {},
-                        child: const Text('Cancel'),
-                      ),
-                    ),
+                    Expanded(child: OutlinedButton(onPressed: () {}, child: const Text('Cancel'))),
                   ],
                 ),
               ],
@@ -118,8 +110,7 @@ class HomePage extends StatelessWidget {
               children: const [
                 AppSectionHeader(
                   title: 'Available module chips',
-                  subtitle:
-                      'Useful for role filters, status tags, or quick category indicators.',
+                  subtitle: 'Useful for role filters, status tags, or quick category indicators.',
                 ),
                 SizedBox(height: AppSpacing.s3),
                 Wrap(
@@ -127,20 +118,21 @@ class HomePage extends StatelessWidget {
                   runSpacing: AppSpacing.s2,
                   children: [
                     AppStatusBadge(label: 'User', color: AppColors.primaryCol),
-                    AppStatusBadge(
-                      label: 'Responder',
-                      color: AppColors.secondaryCol,
-                    ),
+                    AppStatusBadge(label: 'Responder', color: AppColors.secondaryCol),
                     AppStatusBadge(label: 'Helper', color: AppColors.tertiary),
                     AppStatusBadge(label: 'On scene', color: AppColors.onScene),
-                    AppStatusBadge(
-                      label: 'Dispatching',
-                      color: AppColors.dispatching,
-                    ),
+                    AppStatusBadge(label: 'Dispatching', color: AppColors.dispatching),
                   ],
                 ),
               ],
             ),
+          ),
+
+          AppPrimaryButton(
+            label: 'Go to Sign In',
+            onPressed: () {
+              Navigator.of(context).pushNamed(AppRoutes.authSignIn);
+            },
           ),
         ],
       ),

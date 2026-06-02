@@ -10,7 +10,10 @@
     "server:build": "pnpm --filter server build",
     "web:dev": "pnpm --filter web dev",
     "web:build": "pnpm --filter web build",
-    "mobile:run": "pnpm --filter mobile run",
+    "mobile:dev": "pnpm --filter mobile dev",
+    "mobile:start": "pnpm --filter mobile start",
+    "mobile:build": "pnpm --filter mobile build:apk",
+    "mobile:analyze": "pnpm --filter mobile analyze",
     "mobile:test": "pnpm --filter mobile test",
     "generate:tokens": "tsx scripts/generate-tokens.ts",
     "lint": "pnpm -r lint"

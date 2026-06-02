@@ -5,6 +5,7 @@ import 'package:mobile/core/constants/app_spacing.dart';
 class AppTextField extends StatelessWidget {
   const AppTextField({
     super.key,
+    this.validator,
     this.controller,
     this.focusNode,
     this.label,
@@ -29,6 +30,7 @@ class AppTextField extends StatelessWidget {
   final int maxLines;
   final bool enabled;
   final ValueChanged<String>? onChanged;
+  final FormFieldValidator<String>? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,7 @@ class AppTextField extends StatelessWidget {
       maxLines: maxLines,
       enabled: enabled,
       onChanged: onChanged,
+      validator: validator,
       style: const TextStyle(color: AppColors.primary),
       decoration: InputDecoration(
         labelText: label,

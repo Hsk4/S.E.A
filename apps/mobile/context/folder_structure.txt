@@ -1,0 +1,116 @@
+    Shared 
+
+    sea-system/
+├── package.json                    ← root scripts (masks mobile workspace commands)
+├── pnpm-workspace.yaml              ← workspace config
+├── .env.example                    ← template for mobile build flavors/vars
+└── .gitignore
+
+
+    Isolated 
+
+
+    apps/
+└── mobile/
+    ├── package.json                ← workspace script configuration
+    ├── pubspec.yaml                ← Flutter dependencies & asset declarations
+    ├── analysis_options.yaml       ← Dart static analysis & linter rules
+    ├── .env                        ← local runtime environment configuration
+    └── lib/
+        ├── main.dart               ← app bootstrapping and initialization entry point
+        │
+        ├── core/                   ← Shared foundational layer (non-feature specific)
+        │   ├── constants/
+        │   │   ├── app_colors.dart     ← mirrored from monorepo design tokens
+        │   │   ├── app_typography.dart
+        │   │   ├── app_spacing.dart
+        │   │   ├── app_radius.dart
+        │   │   ├── socket_events.dart  ← mirrored socket name mappings
+        │   │   ├── roles.dart          ← mirrored RBAC definitions
+        │   │   └── routes.dart         ← GoRouter path string constants
+        │   ├── theme/
+        │   │   ├── app_theme.dart      ← global MaterialApp ThemeData configurations
+        │   │   └── text_styles.dart
+        │   └── router/
+        │       └── app_router.dart     ← GoRouter declarative routing definitions
+        │
+        ├── data/                   ← Data Layer (API, Storage, Infrastructure)
+        │   ├── models/             ← Serialization models (fromJson / toJson)
+        │   │   ├── user.model.dart
+        │   │   ├── responder.model.dart
+        │   │   ├── incident.model.dart
+        │   │   ├── announcement.model.dart
+        │   │   └── registration.model.dart
+        │   ├── repositories/       ← Concrete infrastructure implementations
+        │   │   ├── auth.repository.dart
+        │   │   ├── incident.repository.dart
+        │   │   ├── responder.repository.dart
+        │   │   └── announcement.repository.dart
+        │   └── sources/            ← Raw I/O data drivers
+        │       ├── api_client.dart     ← Dio client configuration + Bearer token interceptor
+        │       ├── socket_service.dart ← Real-time Socket.io driver singleton
+        │       └── storage_service.dart← flutter_secure_storage engine wrapper
+        │
+        ├── domain/                 ← Domain Layer (Pure Business Logic & Entities)
+        │   ├── entities/           ← Immutable business logic data objects
+        │   │   ├── user.entity.dart
+        │   │   ├── incident.entity.dart
+        │   │   └── responder.entity.dart
+        │   ├── repositories/       ← Contract definitions (abstract interfaces)
+        │   │   ├── auth.repository.dart
+        │   │   ├── incident.repository.dart
+        │   │   └── responder.repository.dart
+        │   └── usecases/           ← Single-responsibility application actions
+        │       ├── trigger_sos.usecase.dart
+        │       ├── cancel_sos.usecase.dart
+        │       ├── accept_alert.usecase.dart
+        │       ├── decline_alert.usecase.dart
+        │       ├── update_location.usecase.dart
+        │       ├── toggle_availability.usecase.dart
+        │       └── resolve_incident.usecase.dart
+        │
+        └── presentation/           ← Presentation Layer (UI & State Management)
+            ├── screens/            ← Full viewport page layouts
+            │   ├── auth/
+            │   │   ├── login_screen.dart
+            │   │   └── register_screen.dart
+            │   ├── user/
+            │   │   ├── home_screen.dart
+            │   │   ├── sos_active_screen.dart
+            │   │   └── cancellation_screen.dart
+            │   ├── responder/
+            │   │   ├── responder_home_screen.dart
+            │   │   ├── incoming_alert_screen.dart
+            │   │   ├── enroute_screen.dart
+            │   │   └── resolve_screen.dart
+            │   └── helper/
+            │       ├── helper_home_screen.dart
+            │       ├── helper_alert_screen.dart
+            │       └── helper_enroute_screen.dart
+            │
+            ├── widgets/            ← Componentized UI building blocks
+            │   ├── panic_button.dart
+            │   ├── live_map.dart
+            │   ├── eta_card.dart
+            │   ├── responder_card.dart
+            │   ├── availability_toggle.dart
+            │   ├── alert_type_chip.dart
+            │   └── countdown_ring.dart
+            │
+            └── blocs/              ← BLoC state management logic controllers
+                ├── auth/
+                │   ├── auth_bloc.dart
+                │   ├── auth_event.dart
+                │   └── auth_state.dart
+                ├── incident/
+                │   ├── incident_bloc.dart
+                │   ├── incident_event.dart
+                │   └── incident_state.dart
+                ├── location/
+                │   ├── location_bloc.dart
+                │   ├── location_event.dart
+                │   └── location_state.dart
+                └── responder/
+                    ├── responder_bloc.dart
+                    ├── responder_event.dart
+                    └── responder_state.dart

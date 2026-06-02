@@ -1,9 +1,11 @@
 {
   "name": "mobile",
   "private": true,
-  "packageManager": "pnpm@10",
+  "packageManager": "pnpm@11.1.2",
   "scripts": {
-    "run": "flutter run",
+    "dev": "flutter run -d chrome",
+    "start": "flutter run",
+    "build:apk": "flutter build apk",
     "test": "flutter test",
     "analyze": "flutter analyze"
   },

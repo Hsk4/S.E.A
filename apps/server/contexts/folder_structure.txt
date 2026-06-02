@@ -1,0 +1,107 @@
+Monorepo/ shared for backend 
+
+sea-system/
+├── package.json                    ← root scripts (masks all app commands)
+├── pnpm-workspace.yaml              ← workspace config
+├── .env.example                    ← environment variable template
+├── tsconfig.base.json              ← shared TypeScript base config
+│
+├── packages/
+│   └── shared/                     ← Shared package consumed by the server
+│       ├── package.json
+│       ├── tsconfig.json
+│       └── src/
+│           ├── index.ts            ← barrel export for shared package
+│           ├── roles.ts            ← role constants and enums
+│           ├── events.ts           ← socket event name constants
+│           ├── errors.ts           ← error codes and messages
+│           ├── tokens.ts           ← design tokens (single source of truth)
+│           └── schemas/            ← Validation schemas used in middleware
+│               ├── index.ts
+│               ├── auth.schema.ts
+│               ├── incident.schema.ts
+│               ├── responder.schema.ts
+│               ├── announcement.schema.ts
+│               └── registration.schema.
+
+
+
+Isolated Server Architecture
+
+apps/
+└── server/
+    ├── package.json
+    ├── tsconfig.json
+    ├── bunfig.toml                 ← Bun runtime config
+    ├── .env
+    └── src/
+        ├── index.ts                ← Express + Socket.io bootstrap
+        │
+        ├── config/                 ← System-wide definitions & validation
+        │   ├── env.ts              ← Zod-validated environment variables
+        │   ├── db.ts               ← MongoDB connection
+        │   └── constants.ts        ← App-wide operational variables (radius, timers)
+        │
+        ├── models/                 ← Mongoose Data Models
+        │   ├── user.model.ts
+        │   ├── responder.model.ts  ← Ambulance, police, fire entities
+        │   ├── helper.model.ts
+        │   ├── incident.model.ts
+        │   ├── log.model.ts
+        │   ├── announcement.model.ts
+        │   └── registration.model.ts
+        │
+        ├── controllers/            ← Express HTTP Request Orchestrators
+        │   ├── auth.controller.ts
+        │   ├── incident.controller.ts
+        │   ├── responder.controller.ts
+        │   ├── helper.controller.ts
+        │   ├── announcement.controller.ts
+        │   ├── registration.controller.ts
+        │   └── log.controller.ts
+        │
+        ├── services/               ← Core Core Business Logic Engines
+        │   ├── dispatch.service.ts    ← Core dispatch matching engine
+        │   ├── escalation.service.ts  ← 10-min timer and escalation state machine
+        │   ├── radius.service.ts      ← Geospatial 5km responder search
+        │   ├── auth.service.ts
+        │   ├── incident.service.ts
+        │   ├── responder.service.ts
+        │   ├── helper.service.ts
+        │   ├── announcement.service.ts
+        │   ├── registration.service.ts
+        │   ├── notification.service.ts ← FCM push notifications
+        │   └── log.service.ts
+        │
+        ├── routes/                 ← REST API Endpoints Map
+        │   ├── index.ts               ← Root router router
+        │   ├── auth.routes.ts
+        │   ├── incident.routes.ts
+        │   ├── responder.routes.ts
+        │   ├── helper.routes.ts
+        │   ├── announcement.routes.ts
+        │   ├── registration.routes.ts
+        │   └── log.routes.ts
+        │
+        ├── middleware/             ← Request Interceptors & Guards
+        │   ├── auth.middleware.ts     ← JWT verification
+        │   ├── role.middleware.ts     ← RBAC Guard (403 enforcement)
+        │   ├── error.middleware.ts    ← Global centralized error handler
+        │   ├── validate.middleware.ts ← Shared Zod schema validation execution
+        │   └── logger.middleware.ts   ← Pino request logger
+        │
+        ├── sockets/                ← Real-time Full-Duplex Layer
+        │   ├── index.ts               ← Socket.io server setup + connection auth
+        │   ├── incident.socket.ts     ← SOS, cancel, dispatch event streams
+        │   ├── location.socket.ts     ← Live GPS high-frequency updates
+        │   ├── responder.socket.ts    ← State changes (accept, decline, arrive, resolve)
+        │   └── announcement.socket.ts ← Admin real-time broadcast pipelines
+        │
+        ├── utils/                  ← Server-bound Structural Helpers
+        │   ├── asyncHandler.ts        ← Wraps async route handlers to catch errors
+        │   ├── response.ts            ← Standard API response envelope shape
+        │   └── jwt.ts                 ← Sign and verify utilities
+        │
+        └── types/                  ← Express & Socket Namespace Augmentations
+            ├── express.d.ts           ← Augment req with authenticated user + role
+            └── socket.d.ts            ← Augment socket context with user + role
